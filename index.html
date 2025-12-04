@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Smol-GS: Compact Representations for Abstract 3D Gaussian Splatting">
+  <meta name="keywords" content="Gaussian Splatting, Data Compression, Computer Graphics">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smol-GS: Compact Representations for Abstract 3D Gaussian Splatting</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="">  -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎈</text></svg>">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <link href="static/css/twentytwenty.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Smol-GS: Compact Representations for Abstract 3D Gaussian Splatting</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://haishan-wang.github.io/">Haishan Wang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://mhvali.github.io/">Mohammad Hassan Vali</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://users.aalto.fi/~asolin/">Arno Solin</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Aalto University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2411.19756"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2411.19756"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/AaltoML/Smol-GS"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="margin-top: -50px;">
+    <div class="container is-max-desktop">
+      <!-- TLDR. -->
+      <div class="content" style="display: flex;">
+          <h2 class="title is-5" style="margin-right: 10px; white-space: nowrap; letter-spacing: -2px;">
+            <span style="color: red;">T</span>
+            <span style="color: blue;">L</span>
+            <span style="color: green;">D</span>
+            <span style="color: orange;">R</span>
+            <span style="color: black;">:</span>
+            </h2>
+          <div class="content has-text-justified">
+            <p>
+                <b>We model the 3D space with the abstract Gaussian splatting, which provides compact and efficient representations with high fidelity.</b>
+            </p>
+          </div>
+      </div>
+      <!--/ TLDR. -->
+    </div>
+  </section>
+
+<section class="teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered interpolation-panel">
+        <img src="assets/teaser.jpg"  style="width:100%; height: auto;  margin: 0 auto;"\>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present <span class="dnerf">Smol-GS</span>, a novel method for learning compact representations for 3D Gaussian Splatting (3DGS). Our approach learns highly efficient encodings in 3D space that integrate both spatial and semantic information. The model captures the coordinates of the splats through a recursive voxel hierarchy, while splat-wise features store abstracted cues, including color, opacity, transformation, and material properties. This design allows the model to compress 3D scenes by orders of magnitude without loss of flexibility. <span class="dnerf">Smol-GS</span> achieves state-of-the-art compression on standard benchmarks while maintaining high rendering quality. Beyond visual fidelity, the discrete representations could potentially serve as a foundation for downstream tasks such as navigation, planning, and broader 3D scene understanding.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="has-text-centered" >
+      <h2 class="title is-3">Pipeline</h2>
+      <div class="columns is-four-fifths">
+        <img src="assets/pipeline.jpg" style="width:100%; height: auto;  margin: 0 auto;"\>
+      </div>
+        <p>Our model represents the 3D space with compact and efficient abstract features.</p>
+    </div>
+  </div>
+</section>
+
+
+<!--Visuals-->
+<section class="section">
+    <div class="container hero-body">
+        <div class="column has-text-centered">
+            <h2 class="title is-3">Qualitative Visuals</h2>
+        </div>
+        <!--RGB/Depths/Normals-->
+        <p><strong>Qualitative comparison:</strong> We visualize the reconstruction result of 3D Gaussian Splatting (3DGS-30K), Smol-GS-base, and the ground truth (GT).</p>
+        <!-- <p><strong>Scene decomposition:</strong> We visualize the result of optimized distractor Gaussians, the static 3D scene, and the combined alpha-composited images.</p> -->
+        <div class="columns is-centered is-gapless">
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/garden_3dgs_00001.jpg" alt="3DGS-30K">
+                    <img src="assets/qualitative/garden_smolgsbase_00001.jpg" alt="Smol-GS-base">
+                    <img src="assets/qualitative/garden_gt_00001.jpg" alt="GT">
+                </div>
+            </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/bicycle_3dgs_00001.jpg" alt="3DGS-30K">
+                    <img src="assets/qualitative/bicycle_smolgsbase_00001.jpg" alt="Smol-GS-base">
+                    <img src="assets/qualitative/bicycle_gt_00001.jpg" alt="GT">
+                </div>
+            </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/kitchen_3dgs_00001.jpg" alt="3DGS-30K">
+                    <img src="assets/qualitative/kitchen_smolgsbase_00001.jpg" alt="Smol-GS-base">
+                    <img src="assets/qualitative/kitchen_gt_00001.jpg" alt="GT">
+                </div>
+            </div>
+          </div>
+          <div class="columns is-centered is-gapless">
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/counter_3dgs_00001.jpg" alt="3DGS-30K">
+                    <img src="assets/qualitative/counter_smolgsbase_00001.jpg" alt="Smol-GS-base">
+                    <img src="assets/qualitative/counter_gt_00001.jpg" alt="GT">
+                </div>
+              </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/room_3dgs_00001.jpg" alt="3DGS-30K">
+                    <img src="assets/qualitative/room_smolgsbase_00001.jpg" alt="Smol-GS-base">
+                    <img src="assets/qualitative/room_gt_00001.jpg" alt="GT">
+                </div>
+            </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/playroom_3dgs_00001.jpg" alt="3DGS-30K">
+                    <img src="assets/qualitative/playroom_smolgsbase_00001.jpg" alt="Smol-GS-base">
+                    <img src="assets/qualitative/playroom_gt_00001.jpg" alt="GT">
+                </div>
+            </div>
+        </div>
+        <!--RGB/Depths/Normals-->
+        <p><strong>Feature space:</strong> We visualize the reconstruction results of Smol-GS-base in the RGB and feature spaces.</p>
+        <!-- <p><strong>Scene decomposition:</strong> We visualize the result of optimized distractor Gaussians, the static 3D scene, and the combined alpha-composited images.</p> -->
+        <div class="columns is-centered is-gapless">
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/garden_smolgsbase_00001.jpg" alt="Smol-GS (RGB)">
+                    <img src="assets/qualitative/garden_smolgsbase_feat_00001.jpg" alt="Smol-GS (Feature)">
+                </div>
+            </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/bicycle_smolgsbase_00001.jpg" alt="Smol-GS (RGB)">
+                    <img src="assets/qualitative/bicycle_smolgsbase_feat_00001.jpg" alt="Smol-GS (Feature)">
+                </div>
+              </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/counter_smolgsbase_00001.jpg" alt="Smol-GS (RGB)">
+                    <img src="assets/qualitative/counter_smolgsbase_feat_00001.jpg" alt="Smol-GS (Feature)">
+                </div>
+            </div>
+          </div>
+          <div class="columns is-centered is-gapless">
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/kitchen_smolgsbase_00001.jpg" alt="Smol-GS (RGB)">
+                    <img src="assets/qualitative/kitchen_smolgsbase_feat_00001.jpg" alt="Smol-GS (Feature)">
+                </div>
+              </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/room_smolgsbase_00001.jpg" alt="Smol-GS (RGB)">
+                    <img src="assets/qualitative/room_smolgsbase_feat_00001.jpg" alt="Smol-GS (Feature)">
+                </div>
+              </div>
+            <div class="column is-one-third has-text-centered">
+                <div class="twentytwenty-container twentytwenty-custom">
+                    <img src="assets/qualitative/playroom_smolgsbase_00001.jpg" alt="Smol-GS (RGB)">
+                    <img src="assets/qualitative/playroom_smolgsbase_feat_00001.jpg" alt="Smol-GS (Feature)">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 
+            and is based on the <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> website. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="static/css/bootstrap.min.js"></script>
+<!-- <script src="/js/offcanvas.js"></script> -->
+<script src="static/css/jquery.event.move.js"></script>
+<script src="static/css/jquery.twentytwenty.js"></script>
+
+<script>
+    $(window).load(function () { $(".twentytwenty-container").twentytwenty({ default_offset_pct: 0.5 }); });
+</script>
+
+</body>
+</html>
