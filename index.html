@@ -274,7 +274,7 @@
         marker: "circle"
       },
       {
-        name: "3DGS",
+        name: "3DGS (naive baseline)",
         size: [0, 24],
         psnr: [27.21, 27.21],
         ssim: [0.815, 0.815],
@@ -324,9 +324,8 @@
         <div class="column has-text-centered">
             <h2 class="title is-3">Qualitative Visuals</h2>
         </div>
-        <!--RGB/Depths/Normals-->
+        <!--RGB-->
         <p><strong>Qualitative comparison:</strong> We visualize the reconstruction result of 3D Gaussian Splatting (3DGS-30K), Smol-GS-base, and the ground truth (GT).</p>
-        <!-- <p><strong>Scene decomposition:</strong> We visualize the result of optimized distractor Gaussians, the static 3D scene, and the combined alpha-composited images.</p> -->
         <div class="columns is-centered is-gapless">
             <div class="column is-one-third has-text-centered">
                 <div class="twentytwenty-container twentytwenty-custom">
@@ -373,9 +372,8 @@
                 </div>
             </div>
         </div>
-        <!--RGB/Depths/Normals-->
-        <p><strong>Feature space:</strong> We visualize the reconstruction results of Smol-GS-base in the RGB and feature spaces.</p>
-        <!-- <p><strong>Scene decomposition:</strong> We visualize the result of optimized distractor Gaussians, the static 3D scene, and the combined alpha-composited images.</p> -->
+        <!--Features-->
+        <p><strong>Feature space:</strong> We visualize the reconstruction results of Smol-GS-base in the RGB and feature spaces. The 8-dim features are mapped to RGB color by RGB=sigmoid(PCA(feat)).</p>
         <div class="columns is-centered is-gapless">
             <div class="column is-one-third has-text-centered">
                 <div class="twentytwenty-container twentytwenty-custom">
