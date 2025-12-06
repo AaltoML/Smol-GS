@@ -27,6 +27,20 @@
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
   <link href="static/css/twentytwenty.css" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdn.plot.ly/plotly-2.35.0.min.js"></script>
+  <style>
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .chart {
+      flex: 1 1 240px;
+      min-width: 240px;
+      height: 440px;
+    }
+  </style>
 </head>
 <body>
 
@@ -39,21 +53,22 @@
           <h1 class="title is-1 publication-title">Smol-GS: Compact Representations for Abstract 3D Gaussian Splatting</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://haishan-wang.github.io/">Haishan Wang</a><sup>1</sup>,</span>
+              <a href="https://haishan-wang.github.io/">Haishan Wang</a><sup>1,2</sup>,</span>
             <span class="author-block">
-              <a href="https://mhvali.github.io/">Mohammad Hassan Vali</a><sup>1</sup>,</span>
+              <a href="https://mhvali.github.io/">Mohammad Hassan Vali</a><sup>1,2</sup>,</span>
             <span class="author-block">
-              <a href="https://users.aalto.fi/~asolin/">Arno Solin</a><sup>1</sup>
+              <a href="https://users.aalto.fi/~asolin/">Arno Solin</a><sup>1,2</sup>
             </span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Aalto University</span>
+            <span class="author-block"><sup>1</sup>ELLIS Institute Finland</span>  
+            <span class="author-block"><sup>2</sup>Aalto University</span>
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- PDF Link. -->
+              <!-- PDF Link 
               <span class="link-block">
                 <a href="https://arxiv.org/pdf/2512.00850"
                    class="external-link button is-normal is-rounded is-dark">
@@ -62,7 +77,7 @@
                   </span>
                   <span>Paper</span>
                 </a>
-              </span>
+              </span> -->
               <span class="link-block">
                 <a href="https://arxiv.org/abs/2512.00850"
                    class="external-link button is-normal is-rounded is-dark">
@@ -156,7 +171,7 @@
   </div>
 </section>
 
-
+<!-- Pipeline -->
 <section class="section">
   <div class="container is-max-desktop">
     <div class="has-text-centered" >
@@ -164,10 +179,118 @@
       <div class="columns is-four-fifths">
         <img src="assets/pipeline.jpg" style="width:100%; height: auto;  margin: 0 auto;"\>
       </div>
-        <p>Our model represents the 3D space with compact and efficient abstract features.</p>
+        <p>Method overview of Smol-GS: We train (trained parameters in blue) neural splats with tiny MLP-decoders for view-dependent rendering. The coordinates are compressed with occupancy-octree coordinate coding. We also learn the quantization and arithmetic coding of splat features with NLL rate terms, and employ adaptive density control with stage-wise training (loss-terms in red) to balance fidelity and size.</p>
     </div>
   </div>
 </section>
+
+
+<!-- Charts -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="has-text-centered" >
+      <h2 class="title is-3">Comparisons to Other Methods</h2>
+        <div class="charts">
+    <div id="psnr" class="chart"></div>
+    <div id="ssim" class="chart"></div>
+    <div id="lpips" class="chart"></div>
+  </div>
+
+  <script>
+    const plotConfig = { displayModeBar: false };
+
+    const methods = [
+      {
+        name: "Smol-GS (ours)",
+        size: [6.440, 4.746, 3.638],
+        psnr: [27.5078461964925, 27.2932067447239, 27.0969901614719],
+        ssim: [0.806302971310086, 0.79763584666782, 0.784479399522146],
+        lpips: [0.241910505625937, 0.260420741306411, 0.279810008075502],
+        marker: "circle"
+      },
+      {
+        name: "CompGS",
+        size: [18, 19],
+        psnr: [27.03, 27.12],
+        ssim: [0.804, 0.806],
+        lpips: [0.243, 0.24],
+        marker: "circle"
+      },
+      {
+        name: "HAC",
+        size: [16.005406, 22.935654],
+        psnr: [27.53, 27.77],
+        ssim: [0.807, 0.811],
+        lpips: [0.238, 0.23],
+        marker: "circle"
+      },
+      {
+        name: "ContextGS",
+        size: [13.297458, 19.308117],
+        psnr: [27.62, 27.75],
+        ssim: [0.808, 0.811],
+        lpips: [0.237, 0.231],
+        marker: "circle"
+      },
+      {
+        name: "HAC++",
+        size: [8.742363, 19.379619],
+        psnr: [27.6, 27.82],
+        ssim: [0.803, 0.811],
+        lpips: [0.253,0.231],
+        marker: "circle"
+      },
+      {
+        name: "HEMGS",
+        size: [12.538557, 21.000111],
+        psnr: [27.75, 27.93],
+        ssim: [0.806, 0.813],
+        lpips: [0.248, 0.23],
+        marker: "circle"
+      },
+      {
+        name: "3DGS",
+        size: [0, 24],
+        psnr: [27.21, 27.21],
+        ssim: [0.815, 0.815],
+        lpips: [0.214, 0.214],
+        marker: "none",
+        lineDash: "dash"
+      },
+    ];
+
+    function makeTraces(metricKey) {
+      return methods.map(m => ({
+        x: m.size,
+        y: m[metricKey],
+        name: m.name,
+        mode: m.lineDash === "dash" ? "lines" : "lines+markers",
+        line: { dash: m.lineDash || "solid" },
+        hovertemplate:
+          "Method: " + m.name + "<br>Size: %{x:.2f} MB<br>" +
+          metricKey.toUpperCase() + ": %{y:.4f}<extra></extra>"
+      }));
+    }
+
+    const layoutBase = (title, yTitle) => ({
+      title,
+      margin: {l: 60, r: 10, t: 40, b: 40},
+      xaxis: {title: "← Size [MB]", showline: true, mirror: "allticks", rangemode: "tozero",}, 
+      yaxis: {title: yTitle,  showline: true, mirror: "allticks", },
+      legend: {orientation: "h", y: -0.33}
+    });
+
+    Plotly.newPlot("psnr",  makeTraces("psnr"),  layoutBase("PSNR vs Size",  "PSNR →"), plotConfig);
+    Plotly.newPlot("ssim",  makeTraces("ssim"),  layoutBase("SSIM vs Size",  "SSIM →"), plotConfig);
+    Plotly.newPlot("lpips", makeTraces("lpips"), layoutBase("LPIPS vs Size", "← LPIPS"), plotConfig);
+  </script>
+
+      <p>These charts for the MipNeRF-360 data set show how different 3DGS compression methods trade model size for reconstruction quality (PSNR, SSIM, LPIPS). Hover over a point to see details, and click legend entries to toggle methods. Smol-GS provides an excellent trade-off in  storage size and quality. Smol-GS (tiny--small--base) consistently lies on or beyond the Pareto frontier, achieving markedly smaller sizes at comparable quality to strong baselines collected via the <a href="https://w-m.github.io/3dgs-compression-survey/">3DGS.zip benchmark</a>.</p>
+    </div>
+  </div>
+</section>
+
+
 
 
 <!--Visuals-->
