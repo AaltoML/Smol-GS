@@ -204,7 +204,9 @@
       <div class="columns is-four-fifths">
         <img src="assets/pipeline.jpg" style="width:100%; height: auto;  margin: 0 auto;"\>
       </div>
+      <div class="content has-text-justified">
         <p>Method overview of Smol-GS: We train (trained parameters in blue) neural splats with tiny MLP-decoders for view-dependent rendering. The coordinates are compressed with occupancy-octree coordinate coding. We also learn the quantization and arithmetic coding of splat features with NLL rate terms, and employ adaptive density control with stage-wise training (loss-terms in red) to balance fidelity and size.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -309,8 +311,9 @@
     Plotly.newPlot("ssim",  makeTraces("ssim"),  layoutBase("SSIM vs Size",  "SSIM →"), plotConfig);
     Plotly.newPlot("lpips", makeTraces("lpips"), layoutBase("LPIPS vs Size", "← LPIPS"), plotConfig);
   </script>
-
+    <div class="content has-text-justified">
       <p>These charts for the MipNeRF-360 data set show how different 3DGS compression methods trade model size for reconstruction quality (PSNR, SSIM, LPIPS). Hover over a point to see details, and click legend entries to toggle methods. Smol-GS provides an excellent trade-off in  storage size and quality. Smol-GS (tiny--small--base) consistently lies on or beyond the Pareto frontier, achieving markedly smaller sizes at comparable quality to strong baselines collected via the <a href="https://w-m.github.io/3dgs-compression-survey/">3DGS.zip benchmark</a>.</p>
+    </div>
     </div>
   </div>
 </section>
