@@ -40,6 +40,25 @@
       min-width: 240px;
       height: 440px;
     }
+    .video-frame {
+      max-width: 100%;
+      margin: 0 auto;
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 16 / 9;  /* keeps height fixed when switching */
+    }
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .scene-tabs.is-toggle li.is-active a {
+      background-color: #363636;  /* dark background */
+      border-color: #363636;
+      color: #fff;                /* white text */
+    }
   </style>
 </head>
 <body>
@@ -180,7 +199,6 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column has-text-centered">
-        <h2 class="title is-3">Video</h2>
         <video
           src="assets/Smol-GS-teaser.mp4"
           controls
@@ -320,6 +338,43 @@
 
 
 
+<!-- Scene Videos -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column has-text-centered">
+        <h2 class="title is-3">Scene Videos</h2>
+        <div class="content has-text-justified">
+        <p>These videos show side-by-side novel-view sweeps for several Mip-NeRF&nbsp;360 scenes, comparing a vanilla 3DGS model trained for 30k steps against our compressed Smol-GS representation. Smol-GS keeps the underlying Gaussian primitive structure but replaces heavy per-splat SH parameters with low-dimensional abstract features decoded by tiny MLPs and stores geometry in an entropy-coded occupancy octree. Despite being about two orders of magnitude smaller than the original 3DGS models, Smol-GS faithfully preserves fine geometry and view-dependent effects—specular highlights, glass, and low-texture walls—and often removes artefacts visible in 3DGS-30K. Together with the quantitative plots below, these sweeps highlight that explicit-but-packed geometry plus learned abstract splat features yield a very strong rate–distortion trade-off while remaining compatible with downstream 3DGS-style editing.</p>
+        </div>
+        <div class="tabs is-centered is-toggle is-toggle-rounded is-small scene-tabs">
+          <ul>
+            <li class="is-active" data-video="assets/videos/bicycle.mp4"><a>bicycle</a></li>
+            <li data-video="assets/videos/garden.mp4"><a>garden</a></li>
+            <li data-video="assets/videos/kitchen.mp4"><a>kitchen</a></li>
+            <li data-video="assets/videos/room.mp4"><a>room</a></li>
+            <li data-video="assets/videos/counter.mp4"><a>counter</a></li>
+            <li data-video="assets/videos/playroom.mp4"><a>playroom</a></li>
+          </ul>
+        </div>
+
+        <div class="video-frame">
+          <video id="scene-video"
+                 controls
+                 loop
+                 autoplay
+                 muted
+                 playsinline>
+            <source src="assets/videos/bicycle.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
 <!--Visuals-->
 <section class="section">
@@ -447,6 +502,52 @@
 <script>
     $(window).load(function () { $(".twentytwenty-container").twentytwenty({ default_offset_pct: 0.5 }); });
 </script>
+
+<!-- Video scene tabs -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".scene-tabs li");
+    const video = document.getElementById("scene-video");
+    const source = video.querySelector("source");
+    let userInteracted = false;
+
+    function activateTab(tab) {
+      if (!tab || tab.classList.contains("is-active")) return;
+
+      // Update tab styling
+      tabs.forEach(function (t) { t.classList.remove("is-active"); });
+      tab.classList.add("is-active");
+
+      // Swap video source
+      const newSrc = tab.dataset.video;
+      if (source.getAttribute("src") !== newSrc) {
+        source.setAttribute("src", newSrc);
+        video.load();
+        video.play();
+      }
+    }
+
+    // Manual selection: after this, no more auto-advance
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        userInteracted = true;
+        activateTab(this);
+      });
+    });
+
+    // Auto-advance every 10 s until user clicks a tab
+    setInterval(function () {
+      if (userInteracted || tabs.length === 0) return;
+
+      const active = document.querySelector(".scene-tabs li.is-active") || tabs[0];
+      const idx = Array.prototype.indexOf.call(tabs, active);
+      const next = tabs[(idx + 1) % tabs.length];
+      activateTab(next);
+    }, 10000);
+  });
+</script>
+
+
 
 </body>
 </html>
