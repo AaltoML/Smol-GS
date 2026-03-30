@@ -430,10 +430,12 @@
       textangle: -90
     }));
 
-    function makeTrace(x, y, name, color, dashStyle) {
+    function makeTrace(x, y, name, color, dashStyle, yFmt = ".2f") {
+  const xLabels = x.map(v => (v / 1000) + "k");
   return [{
     x: x,
     y: y,
+    customdata: xLabels,
     mode: "lines+markers",
     name: name,
     line: {
@@ -445,6 +447,9 @@
       size: 2,
       color: color      // match marker color
     },
+    hovertemplate:
+           "<br>Iteration: %{customdata} <br>" +
+          name.toUpperCase() + ": %{y:" + yFmt + "}<extra></extra>"
   }];
 }
     const layout = (title, yTitle) => ({
@@ -460,21 +465,21 @@
     // --- create plots ---
     Plotly.newPlot(
       "plot1",
-      makeTrace(iteration, model_size, "Curve 1", "rgb(0,128,0)", "solid"),
+      makeTrace(iteration, model_size, "Model size (MB)", "rgb(0,128,0)", "solid"),
       layout("Model size (MB)"),
       plotConfig
     );
 
     Plotly.newPlot(
       "plot2",
-      makeTrace(iteration, psnr, "Curve 2", "rgb(31,119,180)", "solid"),
+      makeTrace(iteration, psnr, "PSNR (dB)", "rgb(31,119,180)", "solid"),
       layout("PSNR (dB)"),
       plotConfig
     );
 
     Plotly.newPlot(
       "plot3",
-      makeTrace(iteration, num_gaussians, "Curve 3", "rgb(255,127,14)", "solid"),
+      makeTrace(iteration, num_gaussians, "#Gaussians", "rgb(255,127,14)", "solid", ".0f"),
       layout("Num of Gaussians"),
       plotConfig
     );
